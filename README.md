@@ -19,3 +19,25 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+# Git Branches
+1. Show All Local Branches \
+`git branch`
+
+2. Show All Remote Branches \
+`git branch -r`
+
+
+3. Show Both Local and Remote Branches \
+`git branch -a`
+
+Local branches. \
+Remote branches (starting with remotes/).
+
+Example Output:
+```
+* main
+feature-branch   
+remotes/origin/main 
+remotes/origin/feature-branch
+```
