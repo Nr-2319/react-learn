@@ -1,6 +1,6 @@
 import "./Video.css";
 
-const Video = ({ title, channel, views, time, verified, id }) => {
+const Video = ({ title, channel, views, time, verified, id, children }) => {
     return (
         <>
             <div className="container">
@@ -19,6 +19,8 @@ const Video = ({ title, channel, views, time, verified, id }) => {
                 <div className="views">
                     {views} views <span>.</span> {time}
                 </div>
+
+                <div>{children}</div>
             </div>
         </>
     );

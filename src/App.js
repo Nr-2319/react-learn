@@ -1,4 +1,5 @@
 import "./App.css";
+import PlayButton from "./components/PlayButton";
 import Video from "./components/Video";
 import videos from "./data/data";
 
@@ -16,7 +17,14 @@ function App() {
                     time={video.time}
                     channel={video.channel}
                     verified={video.verified}
-                ></Video>
+                >
+                    <PlayButton
+                        onPlay={(msg) => console.log(msg, video.title)}
+                        onPause={(msg) => console.log(msg, video.title)}
+                    >
+                        {video.title}
+                    </PlayButton>
+                </Video>
             ))}
         </div>
     );
