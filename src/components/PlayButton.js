@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PlayButton.css";
 
 const PlayButton = ({ onPlay, onPause, children }) => {
-    let playing = false;
+    console.log("render Play Button")
+
+    const [playing, setPlaying] = useState(false);
 
     const handleClick = (e) => {
-        console.log("event: ", e);
+        // console.log("event: ", e);
         e.stopPropagation();
+
         if (playing) {
-            onPause("Paused");
+            onPause("Paused..");
         } else {
-            onPlay("Playing");
+            onPlay("Playing..");
         }
 
-        playing = !playing;
+        setPlaying(!playing);
     };
 
-    return <button onClick={handleClick}>{children}</button>;
+    return (
+        <button onClick={handleClick}>
+            {children} {!playing ? "▶️" : "⏸️"}
+        </button>
+    );
 };
 
 export default PlayButton;

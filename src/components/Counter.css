@@ -1,0 +1,9 @@
+.display {
+    padding: 10px;
+    background: #ffd3ac;
+    width: min-content;
+    margin: 10px;
+    font-size: 1.2em;
+    font-weight: 800;
+    color: #a15415;
+}

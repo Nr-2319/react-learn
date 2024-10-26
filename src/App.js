@@ -1,12 +1,35 @@
+import React, { useState } from "react";
 import "./App.css";
+import Counter from "./components/Counter";
 import PlayButton from "./components/PlayButton";
 import Video from "./components/Video";
-import videos from "./data/data";
+import videosDB from "./data/data";
 
 function App() {
+    console.log("render App");
+
+    const [videos, setVideos] = useState(videosDB);
+
     return (
-        <div className="App">
+        <div className="App" onClick={() => console.log("App")}>
             <div className="app-header">Your Tube</div>
+            <button
+                onClick={() => {
+                    setVideos([
+                        ...videos,
+                        {
+                            id: videos.length + 1,
+                            title: "Goa Baga Beach",
+                            views: "50K",
+                            time: "1 sec ago",
+                            channel: "Goa Trills",
+                            verified: true,
+                        },
+                    ]);
+                }}
+            >
+                Add Videos
+            </button>
 
             {videos.map((video) => (
                 <Video
@@ -26,6 +49,8 @@ function App() {
                     </PlayButton>
                 </Video>
             ))}
+
+            <Counter></Counter>
         </div>
     );
 }

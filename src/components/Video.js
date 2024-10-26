@@ -1,6 +1,8 @@
 import "./Video.css";
 
 const Video = ({ title, channel, views, time, verified, id, children }) => {
+    console.log("render Video");
+
     return (
         <>
             <div className="container">
