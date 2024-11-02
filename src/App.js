@@ -1,9 +1,10 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import "./App.css";
 // import Counter from "./components/Counter";
 import videosDB from "./data/data";
 import AddVideo from "./components/AddVideo";
 import VideoList from "./components/VideoList";
+import ThemeContext from "./context/ThemeContext";
 
 function App() {
     console.log("render App");
@@ -11,6 +12,10 @@ function App() {
     const [editableVideo, setEditableVideo] = useState(null);
     // const [videos, setVideos] = useState(videosDB);
     const [videos, dispatch] = useReducer(videoReducer, videosDB);
+
+    const [mode, setMode] = useState("darkMode");
+
+    const themeContext = useContext(ThemeContext);
 
     function videoReducer(videos, action) {
         switch (action.type) {
@@ -45,22 +50,31 @@ function App() {
     }
 
     return (
-        <div className="App" onClick={() => console.log("App")}>
-            <div className="app-header">Your Tube</div>
+        <ThemeContext.Provider value={mode}>
+            <div className={`App ${mode}`} onClick={() => console.log("App")}>
+            <button
+                onClick={() => {
+                    setMode(mode === "darkMode" ? "lightMode" : "darkMode");
+                }}
+            >
+                Change Mode
+            </button>
+                <div className="app-header">Your Tube</div>
 
-            <AddVideo
-                dispatch={dispatch}
-                editableVideo={editableVideo}
-            ></AddVideo>
+                <AddVideo
+                    dispatch={dispatch}
+                    editableVideo={editableVideo}
+                ></AddVideo>
 
-            <VideoList
-                dispatch={dispatch}
-                editVideo={editVideo}
-                videos={videos}
-            ></VideoList>
+                <VideoList
+                    dispatch={dispatch}
+                    editVideo={editVideo}
+                    videos={videos}
+                ></VideoList>
 
-            {/* <Counter></Counter> */}
-        </div>
+                {/* <Counter></Counter> */}
+            </div>
+        </ThemeContext.Provider>
     );
 }
 

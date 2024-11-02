@@ -12,3 +12,13 @@ button:hover {
     background: #494949;
     color: #f5b76b;
 }
+
+button.darkMode {
+    background: #000000;
+    color: #ff97ae;
+}
+
+button.lightMode {
+    background: #89d6ff;
+    color: #000000;
+}

@@ -12,13 +12,12 @@
 .title {
     font-weight: bold;
     margin-bottom: 1em;
-    color: #ccc;
 }
 
 .channel,
 .views {
     font-size: small;
-    color: #ccc;
+
     margin-bottom: 0.2em;
 }
 
@@ -34,4 +33,21 @@
 .edit {
     position: absolute;
     right: 3em;
+}
+
+.darkMode button {
+    color: #99eaee;
+    background: #000;
+}
+
+.lightMode button {
+    color: #000;
+    background: #ffe851;
+}
+
+.container.darkMode {
+    color: #fff;
+}
+.container.lightMode {
+    color: #000;
 }
