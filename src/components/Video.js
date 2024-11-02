@@ -8,7 +8,7 @@ const Video = ({
     verified,
     id,
     children,
-    deleteVideo,
+    dispatch,
     editVideo,
 }) => {
     console.log("render Video");
@@ -19,7 +19,7 @@ const Video = ({
                 <button
                     className="close"
                     onClick={() => {
-                        deleteVideo(id);
+                        dispatch({ type: "DELETE", payload: id });
                     }}
                 >
                     X

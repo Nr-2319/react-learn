@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import "./App.css";
 // import Counter from "./components/Counter";
 import videosDB from "./data/data";
@@ -8,16 +8,34 @@ import VideoList from "./components/VideoList";
 function App() {
     console.log("render App");
 
-    const [videos, setVideos] = useState(videosDB);
     const [editableVideo, setEditableVideo] = useState(null);
+    // const [videos, setVideos] = useState(videosDB);
+    const [videos, dispatch] = useReducer(videoReducer, videosDB);
 
-    function addVideos(video) {
-        setVideos([...videos, { ...video, id: videos.length + 1 }]);
-    }
+    function videoReducer(videos, action) {
+        switch (action.type) {
+            case "ADD": {
+                return [
+                    ...videos,
+                    { ...action.payload, id: videos.length + 1 },
+                ];
+            }
 
-    function deleteVideo(id) {
-        const updatedVideos = videos.filter((v) => v.id !== id);
-        setVideos(updatedVideos);
+            case "DELETE": {
+                return videos.filter((v) => v.id !== action.payload);
+            }
+
+            case "UPDATE": {
+                const idx = videos.findIndex((v) => v.id === action.payload.id);
+                const newVideos = [...videos];
+                newVideos.splice(idx, 1, action.payload);
+                setEditableVideo(null);
+                return newVideos;
+            }
+
+            default:
+                return videos;
+        }
     }
 
     function editVideo(id) {
@@ -26,26 +44,17 @@ function App() {
         setEditableVideo(toUpdate);
     }
 
-    function updateVideo(video) {
-        const idx = videos.findIndex((v) => v.id === video.id);
-        const newVideos = [...videos];
-        newVideos.splice(idx, 1, video);
-
-        setVideos(newVideos);
-    }
-
     return (
         <div className="App" onClick={() => console.log("App")}>
             <div className="app-header">Your Tube</div>
 
             <AddVideo
-                addVideos={addVideos}
-                updateVideo={updateVideo}
+                dispatch={dispatch}
                 editableVideo={editableVideo}
             ></AddVideo>
 
             <VideoList
-                deleteVideo={deleteVideo}
+                dispatch={dispatch}
                 editVideo={editVideo}
                 videos={videos}
             ></VideoList>
