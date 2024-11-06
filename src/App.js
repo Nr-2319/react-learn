@@ -1,10 +1,12 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, { useReducer, useState } from "react";
 import "./App.css";
 // import Counter from "./components/Counter";
 import videosDB from "./data/data";
 import AddVideo from "./components/AddVideo";
 import VideoList from "./components/VideoList";
 import ThemeContext from "./context/ThemeContext";
+import VideosContext from "./context/VideosContext";
+import VideosDispatchContext from "./context/VideosDispatchContext";
 
 function App() {
     console.log("render App");
@@ -14,8 +16,6 @@ function App() {
     const [videos, dispatch] = useReducer(videoReducer, videosDB);
 
     const [mode, setMode] = useState("darkMode");
-
-    const themeContext = useContext(ThemeContext);
 
     function videoReducer(videos, action) {
         switch (action.type) {
@@ -51,29 +51,33 @@ function App() {
 
     return (
         <ThemeContext.Provider value={mode}>
-            <div className={`App ${mode}`} onClick={() => console.log("App")}>
-            <button
-                onClick={() => {
-                    setMode(mode === "darkMode" ? "lightMode" : "darkMode");
-                }}
-            >
-                Change Mode
-            </button>
-                <div className="app-header">Your Tube</div>
+            <VideosContext.Provider value={videos}>
+                <VideosDispatchContext.Provider value={dispatch}>
+                    <div
+                        className={`App ${mode}`}
+                        onClick={() => console.log("App")}
+                    >
+                        <button
+                            onClick={() => {
+                                setMode(
+                                    mode === "darkMode"
+                                        ? "lightMode"
+                                        : "darkMode"
+                                );
+                            }}
+                        >
+                            Change Mode
+                        </button>
+                        <div className="app-header">Your Tube</div>
 
-                <AddVideo
-                    dispatch={dispatch}
-                    editableVideo={editableVideo}
-                ></AddVideo>
+                        <AddVideo editableVideo={editableVideo}></AddVideo>
 
-                <VideoList
-                    dispatch={dispatch}
-                    editVideo={editVideo}
-                    videos={videos}
-                ></VideoList>
+                        <VideoList editVideo={editVideo}></VideoList>
 
-                {/* <Counter></Counter> */}
-            </div>
+                        {/* <Counter></Counter> */}
+                    </div>
+                </VideosDispatchContext.Provider>
+            </VideosContext.Provider>
         </ThemeContext.Provider>
     );
 }

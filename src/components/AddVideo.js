@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./AddVideo.css";
+import useVideoDispatch from "../hooks/VideoDispatch";
 
 const initialVideo = {
     time: "1 month ago",
@@ -9,8 +10,10 @@ const initialVideo = {
     views: "",
 };
 
-const AddVideo = ({ dispatch, editableVideo }) => {
+const AddVideo = ({ editableVideo }) => {
     const [video, setVideo] = useState(initialVideo);
+
+    const dispatch = useVideoDispatch();
 
     function handleSubmit(e) {
         e.preventDefault();
