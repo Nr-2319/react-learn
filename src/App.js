@@ -1,7 +1,6 @@
 import React, { useReducer, useState } from "react";
 import "./App.css";
-// import Counter from "./components/Counter";
-import videosDB from "./data/data";
+import Counter from "./components/Counter";
 import AddVideo from "./components/AddVideo";
 import VideoList from "./components/VideoList";
 import ThemeContext from "./context/ThemeContext";
@@ -13,12 +12,15 @@ function App() {
 
     const [editableVideo, setEditableVideo] = useState(null);
     // const [videos, setVideos] = useState(videosDB);
-    const [videos, dispatch] = useReducer(videoReducer, videosDB);
+    const [videos, dispatch] = useReducer(videoReducer, []);
 
     const [mode, setMode] = useState("darkMode");
 
     function videoReducer(videos, action) {
         switch (action.type) {
+            case "LOAD": {
+                return action.payload;
+            }
             case "ADD": {
                 return [
                     ...videos,
@@ -70,11 +72,10 @@ function App() {
                         </button>
                         <div className="app-header">Your Tube</div>
 
+                        <Counter></Counter>
                         <AddVideo editableVideo={editableVideo}></AddVideo>
 
                         <VideoList editVideo={editVideo}></VideoList>
-
-                        {/* <Counter></Counter> */}
                     </div>
                 </VideosDispatchContext.Provider>
             </VideosContext.Provider>
