@@ -1,4 +1,4 @@
-import { memo, useContext } from "react";
+import { memo, useContext, useLayoutEffect, useRef } from "react";
 import "./Video.css";
 import ThemeContext from "../context/ThemeContext";
 import useVideoDispatch from "../hooks/VideoDispatch";
@@ -17,6 +17,13 @@ const Video = memo(function Video({
     const themeContext = useContext(ThemeContext);
     const dispatch = useVideoDispatch();
 
+    const ref = useRef(null);
+
+    // useLayoutEffect(() => {
+    //     const { height } = ref.current.getBoundingClientRect();
+    //     console.log(height);
+    // }, []);
+
     // useEffect(() => {
     //     const idx = setInterval(() => {
     //         console.log("video playing", id);
@@ -29,7 +36,7 @@ const Video = memo(function Video({
 
     return (
         <>
-            <div className={`container ${themeContext}`}>
+            <div ref={ref} className={`container ${themeContext}`}>
                 <button
                     className="close"
                     onClick={() => {

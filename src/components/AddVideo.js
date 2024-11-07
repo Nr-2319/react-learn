@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import "./AddVideo.css";
 import useVideoDispatch from "../hooks/VideoDispatch";
 
@@ -10,12 +10,21 @@ const initialVideo = {
     views: "",
 };
 
-const AddVideo = ({ editableVideo }) => {
+const AddVideo = forwardRef(function AddVideo({ editableVideo }, ref) {
     const [video, setVideo] = useState(initialVideo);
 
     const dispatch = useVideoDispatch();
 
-    const inputRef = useRef(null);
+    const iRef = useRef(null)
+    useImperativeHandle(ref, ()=>{
+        return {
+            jumpTo(){
+                iRef.current.focus()
+            }
+        }
+    }, [])
+
+    // const inputRef = useRef(null);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -37,14 +46,13 @@ const AddVideo = ({ editableVideo }) => {
             setVideo(editableVideo);
         }
 
-        inputRef.current.focus();
-
+        // inputRef.current.focus();
     }, [editableVideo]);
 
     return (
         <form action="">
             <input
-                ref={inputRef}
+                ref={iRef}
                 type="text"
                 name="title"
                 id=""
@@ -66,6 +74,6 @@ const AddVideo = ({ editableVideo }) => {
             </button>
         </form>
     );
-};
+});
 
 export default AddVideo;

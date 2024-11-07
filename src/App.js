@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from "react";
+import React, { useCallback, useReducer, useRef, useState } from "react";
 import "./App.css";
 import Counter from "./components/Counter";
 import AddVideo from "./components/AddVideo";
@@ -6,6 +6,7 @@ import VideoList from "./components/VideoList";
 import ThemeContext from "./context/ThemeContext";
 import VideosContext from "./context/VideosContext";
 import VideosDispatchContext from "./context/VideosDispatchContext";
+import videosDB from "./data/data";
 
 function App() {
     console.log("render App");
@@ -15,6 +16,8 @@ function App() {
     const [videos, dispatch] = useReducer(videoReducer, []);
 
     const [mode, setMode] = useState("darkMode");
+
+    const inputRef = useRef(null);
 
     function videoReducer(videos, action) {
         switch (action.type) {
@@ -64,6 +67,13 @@ function App() {
                     >
                         <button
                             onClick={() => {
+                                inputRef.current.jumpTo();
+                            }}
+                        >
+                            Focus
+                        </button>
+                        <button
+                            onClick={() => {
                                 setMode(
                                     mode === "darkMode"
                                         ? "lightMode"
@@ -76,7 +86,10 @@ function App() {
                         <div className="app-header">Your Tube</div>
 
                         <Counter></Counter>
-                        <AddVideo editableVideo={editableVideo}></AddVideo>
+                        <AddVideo
+                            ref={inputRef}
+                            editableVideo={editableVideo}
+                        ></AddVideo>
 
                         <VideoList editVideo={editVideo}></VideoList>
                     </div>
