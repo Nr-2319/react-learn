@@ -3,8 +3,6 @@ import "./PlayButton.css";
 import ThemeContext from "../context/ThemeContext";
 
 const PlayButton = memo(function PlayButton({ onPlay, onPause, children }) {
-    console.log("render Play Button");
-
     const [playing, setPlaying] = useState(false);
 
     const themeContext = useContext(ThemeContext);

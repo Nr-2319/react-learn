@@ -1,17 +1,21 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import "./Counter.css";
+import { flushSync } from "react-dom";
 
 const Counter = () => {
-    const [number, setNumber] = useState(20);
+    const [number, setNumber] = useState(1);
     let num = useRef(0);
     function handleClick(e) {
         e.stopPropagation();
-        setNumber((number) => number + 1);
-        setNumber((number) => number + 1);
-        setNumber((number) => number + 1);
+        flushSync(() => {
+            setNumber((number) => number + 1);
+            setNumber((number) => number + 1);
+            setNumber((number) => number + 1);
+        });
         num.current++;
 
-        console.log(num.current);
+        console.log(number);
+        window.print();
     }
 
     const fibFx = useCallback(function fib(n) {

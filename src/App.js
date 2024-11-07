@@ -1,4 +1,11 @@
-import React, { useCallback, useReducer, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useReducer,
+    useRef,
+    useState,
+    lazy,
+    Suspense,
+} from "react";
 import "./App.css";
 import Counter from "./components/Counter";
 import AddVideo from "./components/AddVideo";
@@ -7,6 +14,7 @@ import ThemeContext from "./context/ThemeContext";
 import VideosContext from "./context/VideosContext";
 import VideosDispatchContext from "./context/VideosDispatchContext";
 import videosDB from "./data/data";
+const Dummy = lazy(() => import("./components/Dummy"));
 
 function App() {
     console.log("render App");
@@ -16,6 +24,8 @@ function App() {
     const [videos, dispatch] = useReducer(videoReducer, []);
 
     const [mode, setMode] = useState("darkMode");
+
+    const [show, setShow] = useState(false);
 
     const inputRef = useRef(null);
 
@@ -90,6 +100,13 @@ function App() {
                             ref={inputRef}
                             editableVideo={editableVideo}
                         ></AddVideo>
+
+                        <button onClick={() => setShow(true)}>
+                            Show Lazy Loading
+                        </button>
+                        <Suspense fallback={<div>Loading the Lazy One</div>}>
+                            {show && <Dummy></Dummy>}
+                        </Suspense>
 
                         <VideoList editVideo={editVideo}></VideoList>
                     </div>

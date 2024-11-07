@@ -21,19 +21,19 @@ const VideoList = ({ editVideo }) => {
     const defVideos = useDeferredValue(videos);
 
     async function handleClick(e) {
-        // const res = await axios.get(url);
+        const res = await axios.get(url);
 
         console.log("getVideos");
-        dispatch({ type: "LOAD", payload: moreVideos });
+        dispatch({ type: "LOAD", payload: res.data });
         console.log(moreVideos);
     }
 
     useEffect(() => {
         async function getVideos() {
-            // const res = await axios.get(url);
+            const res = await axios.get(url);
 
             console.log("getVideos");
-            dispatch({ type: "LOAD", payload: videosDB });
+            dispatch({ type: "LOAD", payload: res.data });
             console.log(videosDB);
         }
 

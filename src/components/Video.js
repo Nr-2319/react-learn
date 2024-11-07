@@ -13,7 +13,6 @@ const Video = memo(function Video({
     children,
     editVideo,
 }) {
-    console.log("render Video", id);
     const themeContext = useContext(ThemeContext);
     const dispatch = useVideoDispatch();
 
