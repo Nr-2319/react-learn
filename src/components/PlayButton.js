@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import "./PlayButton.css";
 import ThemeContext from "../context/ThemeContext";
 
-const PlayButton = ({ onPlay, onPause, children }) => {
+const PlayButton = memo(function PlayButton({ onPlay, onPause, children }) {
     console.log("render Play Button");
 
     const [playing, setPlaying] = useState(false);
@@ -14,19 +14,19 @@ const PlayButton = ({ onPlay, onPause, children }) => {
         e.stopPropagation();
 
         if (playing) {
-            onPause("Paused..");
+            onPause();
         } else {
-            onPlay("Playing..");
+            onPlay();
         }
 
         setPlaying(!playing);
     };
 
     return (
-        <button onClick={handleClick} className={themeContext} >
+        <button onClick={handleClick} className={themeContext}>
             {children} {!playing ? "▶️" : "⏸️"}
         </button>
     );
-};
+});
 
 export default PlayButton;

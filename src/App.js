@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useCallback, useReducer, useState } from "react";
 import "./App.css";
 import Counter from "./components/Counter";
 import AddVideo from "./components/AddVideo";
@@ -45,11 +45,14 @@ function App() {
         }
     }
 
-    function editVideo(id) {
-        const toUpdate = videos.find((v) => v.id === id);
+    const editVideo = useCallback(
+        function editVideo(id) {
+            const toUpdate = videos.find((v) => v.id === id);
 
-        setEditableVideo(toUpdate);
-    }
+            setEditableVideo(toUpdate);
+        },
+        [videos]
+    );
 
     return (
         <ThemeContext.Provider value={mode}>

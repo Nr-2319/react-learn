@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import Video from "./Video";
 import PlayButton from "./PlayButton";
 import useVideos from "../hooks/Videos";
@@ -31,6 +31,19 @@ const VideoList = ({ editVideo }) => {
         getVideos();
     }, [dispatch]);
 
+    const play = useCallback(() => console.log("Playing.."), []);
+    const pause = useCallback(() => console.log("Paused.."), []);
+
+    const memoButton = useMemo(
+        () => (
+            <PlayButton onPlay={play} onPause={pause}>
+                {/* {video.title} */}
+                Play Video
+            </PlayButton>
+        ),
+        [pause, play]
+    );
+
     return (
         <>
             {videos.map((video) => (
@@ -44,12 +57,7 @@ const VideoList = ({ editVideo }) => {
                     verified={video.verified}
                     editVideo={editVideo}
                 >
-                    <PlayButton
-                        onPlay={(msg) => console.log(msg, video.title)}
-                        onPause={(msg) => console.log(msg, video.title)}
-                    >
-                        {video.title}
-                    </PlayButton>
+                    {memoButton}
                 </Video>
             ))}
 
